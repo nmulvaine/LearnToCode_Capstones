@@ -1,11 +1,37 @@
 package com.pluralsight.accounting;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        //File reader is reading the transaction.csv file
+        FileReader fileReader = new FileReader("./src/main/resources/transaction.csv");
+
+        //Buffer reader is reading and storing data from the file reader
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        //Reading the first line of the transaction.csv but not saving it
+        String fileInput = bufferedReader.readLine();
+
+        //initializing of an array list of transaction objects
+        ArrayList<Transaction> ledger = new ArrayList<>();
+
+        // reads and goes through the transaction csv until there is nothing left
+        while ((fileInput = bufferedReader.readLine()) != null) {
+            String[] split = fileInput.split("[|]");
+            Transaction transaction = new Transaction(LocalDate.parse(split[0]), LocalTime.parse(split[1]), split[2], split[3], Double.parseDouble(split[4]));
+            ledger.add(transaction);
+
+        }
 
         //create Scanner to read user input
         Scanner myScanner = new Scanner(System.in);
@@ -15,10 +41,12 @@ public class Main {
         while (input) {
             System.out.println("\n==========Home Screen========== ");
             System.out.println();
-            System.out.println("\tD    Add (D)eposit ");
-            System.out.println("\tP    make (P)ayment (Debit) ");
-            System.out.println("\tL    (L)edger ");
-            System.out.println("\tX    E(x)it ");
+            System.out.println("""
+                    (D) add deposit
+                    (p) make payment
+                    (L) Ledger
+                    (X) Exit
+                    """);
             String choice = myScanner.nextLine().toUpperCase();
 
             //Create a switch statement for home screen prompts to user
@@ -35,6 +63,8 @@ public class Main {
                     break;
                 case "L":
                     System.out.println("Ledger");
+                    //method for ledger
+                    Ledger();
                     break;
                 case "X":
                     System.out.println("Exit");
@@ -49,7 +79,7 @@ public class Main {
     }
 
     private static void makeDeposit() {
-    // Get amount
+        // Get amount
         System.out.println(" How much would you like to deposit?");
         Scanner depoScanner = new Scanner(System.in);
         double amount = depoScanner.nextDouble();
@@ -71,12 +101,12 @@ public class Main {
         System.out.println(" How much would you like to deposit?");
 
 
-
         System.out.println("Awesome your deposit was " + deposit + ".");
 
         depoScanner.nextLine();
 
     }
+
     private static void makePayment() {
         System.out.println("How much would you like to pay? ");
 
@@ -85,27 +115,48 @@ public class Main {
 
         System.out.println("Your payment was successful. ");
     }
+
     private static void Ledger() {
         System.out.println("Choose an entry to display ");
 
         Scanner myLedScanner = new Scanner(System.in);
-        String Ledger = myLedScanner.nextLine();
 
-        String option = myLedScanner.nextLine().toUpperCase();
-        switch (option) {
-            case "A":
-                System.out.println();
-                break;
-            case "D":
-                System.out.println();
-                break;
-            case  "P":
-                System.out.println();
-                break;
-            case "R":
-                System.out.println();
-                break;
+
+        boolean input = true;
+
+        while (input) {
+            System.out.println("""
+                    (A) Display all entries
+                    (D) deposits
+                    (P) payments
+                    (R) reports
+                    
+                    """);
+
+            //Create a switch statement for home screen prompts to user
+            String option = myLedScanner.nextLine().toUpperCase();
+            switch (option) {
+                case "A":
+                    System.out.println("show all entries");
+                    //method for all entries
+                    break;
+                case "D":
+                    System.out.println("Showing all deposits");
+                    //method for deposits
+                    break;
+                case "P":
+                    System.out.println("Showing all payments");
+                    //method for payments
+                    break;
+                case "R":
+                    System.out.println("Showing all reports");
+                    input = false;
+                    break;
+                default:
+                    System.out.println("Invalid option choose on of the following (L),(D),(P),(R)");
+            }
         }
-    }
 
+
+    }
 }
