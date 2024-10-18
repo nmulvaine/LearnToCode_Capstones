@@ -74,5 +74,26 @@ When you run the application, you will be presented with a home screen offering 
 
 Amount: The transaction amount (positive for deposits, negative for payments).
 
+###### Interesting code
+
+![Screenshot 2024-10-18 084800](https://github.com/user-attachments/assets/d94eb4b1-7376-4232-af6c-86ccccb84ae3)
+
+The switch statement checks the user's choice and performs different actions based on what the user selected:
+
+
+
+
+
+![Screenshot 2024-10-17 204442](https://github.com/user-attachments/assets/7a60f3a0-4ca8-4710-9c69-ff1eeee1c95f)
+
+![Screenshot 2024-10-17 204641](https://github.com/user-attachments/assets/0f76823c-0dce-46eb-857a-8bfbd30b33a9)
+
+![Screenshot 2024-10-17 205000](https://github.com/user-attachments/assets/12a91f61-2f4b-4d6b-932a-30e7bdecf854)
+
+
+
+
+
+
 
 
