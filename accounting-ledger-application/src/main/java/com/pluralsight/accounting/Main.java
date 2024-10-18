@@ -55,7 +55,7 @@ public class Main {
                     makePayment();
                     break;
                 case "L":
-                    System.out.println("Ledger");
+                    System.out.println("======= Ledger l=======");
                     //method for ledger
                     Ledger();
                     break;
@@ -89,14 +89,13 @@ public class Main {
             System.out.println(split.length);
 
 
-
-
-                //  Transaction transaction = new Transaction(LocalDate.parse(split2[0]), LocalTime.parse(split2[1]), split2[2], split2[3], Double.parseDouble(split2[4]));
-                Transaction transaction = new Transaction(LocalDate.parse(split[0]), LocalTime.parse(split[1]), split[2], split[3], Double.parseDouble(split[4]));
-                ledger.add(transaction);
-            }
+            //  Transaction transaction = new Transaction(LocalDate.parse(split2[0]), LocalTime.parse(split2[1]), split2[2], split2[3], Double.parseDouble(split2[4]));
+            Transaction transaction = new Transaction(LocalDate.parse(split[0]), LocalTime.parse(split[1]), split[2], split[3], Double.parseDouble(split[4]));
+            ledger.add(transaction);
         }
-        private static void makeDeposit() {
+    }
+
+    private static void makeDeposit() {
         // Get amount
         System.out.println(" How much would you like to deposit?");
         Scanner depoScanner = new Scanner(System.in);
@@ -135,9 +134,28 @@ public class Main {
         System.out.println("How much would you like to pay? ");
 
         Scanner payScanner = new Scanner(System.in);
-        double payment = payScanner.nextDouble();
+        double payment = -Math.abs(payScanner.nextDouble()); // Negative value for payments
+        payScanner.nextLine();
+
+        System.out.println("Who's the payee?");
+        String payee = payScanner.nextLine();
+
+        // Get description
+        System.out.println("Transaction description");
+        String desc = payScanner.nextLine();
+
+        // Get current date and time
+        LocalDateTime dateTime = LocalDateTime.now();
+
+        // Create payment transaction
+        Transaction paymentTransaction = new Transaction(dateTime.toLocalDate(), dateTime.toLocalTime(), desc, payee, payment);
 
         System.out.println("Your payment was successful. ");
+
+        // Save payment to the file
+        saveTransactionToFile(paymentTransaction);
+
+
     }
 
     private static void Ledger() {
@@ -177,8 +195,8 @@ public class Main {
                     showPayments();
                     break;
                 case "R":
-                    System.out.println("Showing all reports");
-                   reports();
+                    System.out.println("======= Reports =======");
+                    reports();
                     break;
                 case "H":
                     System.out.println("Returning home");
@@ -305,43 +323,53 @@ public class Main {
             }
         }
     }
+
     public static void monthToDate() {
         LocalDate today = LocalDate.now();
         LocalDate firstDayofmonth = today.withDayOfMonth(1);
         System.out.println("======= Month To Date =======");
 
-        for (Transaction transaction: ledger) {
+        for (Transaction transaction : ledger) {
             if (!transaction.getDate().isBefore(firstDayofmonth) && !transaction.getDate().isAfter(today)) {
                 System.out.println(transaction);
             }
         }
     }
+
     public static void prevMonth() {
         LocalDate today = LocalDate.now();
         YearMonth previousMonth = YearMonth.from(today).minusMonths(1);
+        LocalDate startOfPrevMonth = previousMonth.atDay(1);
+        LocalDate endOfPrevMonth = previousMonth.atEndOfMonth();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" MMMM, yyyy");
-        String formattedPrevMonth = previousMonth.format(formatter);
 
-        System.out.println("previous month" + formattedPrevMonth);
+        System.out.println("previous month" + previousMonth);
+
+        for (Transaction transaction : ledger) {
+            if (!transaction.getDate().isBefore(startOfPrevMonth) && !transaction.getDate().isAfter(endOfPrevMonth)) ;
+            System.out.println(transaction);
+        }
     }
+
     public static void yearToDate() {
         LocalDate today = LocalDate.now();
 
-        LocalDate startOfYear = LocalDate.of(today.getYear(),1, 1);
+        LocalDate startOfYear = LocalDate.of(today.getYear(), 1, 1);
+        System.out.println("Year To Date " + startOfYear + " to " + today);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" MMMM dd yyyy ");
-        String formattedStartOfYear = startOfYear.format(formatter);
-        String formattedToday = today.format(formatter);
+        for (Transaction transaction : ledger) {
+            if (!transaction.getDate().isBefore(startOfYear) && !transaction.getDate().isAfter(today)) {
+                System.out.println(transaction);
+            }
+        }
 
-        System.out.println("year to date" + formattedStartOfYear + "to" + formattedToday);
     }
     public static void prevYear() {
 
         LocalDate today = LocalDate.now();
 
-        int prevYear = today.getYear() -1;
-        LocalDate startOfPrevYear = LocalDate.of(prevYear,1,1);
+        int prevYear = today.getYear() - 1;
+        LocalDate startOfPrevYear = LocalDate.of(prevYear, 1, 1);
         LocalDate endOfPrevOfYear = LocalDate.of(prevYear, 12, 31);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
@@ -350,6 +378,7 @@ public class Main {
 
         System.out.println(" previous year " + formattedStartOfPrevYear + " to " + formattedEndOfYear);
     }
+
     public static void vendorSearch() {
         Scanner searchVendorScanner = new Scanner(System.in);
 
@@ -358,17 +387,16 @@ public class Main {
 
         boolean vendorFound = false;
 
-        for (Transaction transaction: ledger) {
+        for (Transaction transaction : ledger) {
             if (transaction.getVendor().toLowerCase().contains(search)) {
                 System.out.println("Found vendor" + transaction.getVendor());
                 System.out.println(transaction);
                 vendorFound = true;
             }
-            if (!vendorFound) {
-                System.out.println("No vendor found" + search);
-            }
+        }
+        if (!vendorFound) {
+            System.out.println(" No vendor found " + search);
         }
     }
 }
-
 
