@@ -80,13 +80,14 @@ Amount: The transaction amount (positive for deposits, negative for payments).
 
 The switch statement checks the user's choice and performs different actions based on what the user selected:
 
+
+
 ###### Screens
 
-![Screenshot 2024-10-17 204442](https://github.com/user-attachments/assets/7a60f3a0-4ca8-4710-9c69-ff1eeee1c95f)
+![Screenshot 2024-10-18 120954](https://github.com/user-attachments/assets/e67e500e-b8f8-489e-b8ae-3d552e67070f)
 
-![Screenshot 2024-10-17 204641](https://github.com/user-attachments/assets/0f76823c-0dce-46eb-857a-8bfbd30b33a9)
 
-![Screenshot 2024-10-17 205000](https://github.com/user-attachments/assets/12a91f61-2f4b-4d6b-932a-30e7bdecf854)
+![Screenshot 2024-10-18 121014](https://github.com/user-attachments/assets/cfb318e4-29b9-4263-8792-4ea1c6e9d594)
 
 
 
