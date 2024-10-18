@@ -1,8 +1,78 @@
 # Accounting Ledger Application
 
+This Accounting Ledger application is designed to manage and track financial transactions such as deposits and payments. Users can interact with the application via a command-line interface (CLI), where they can view their transaction history, make deposits, payments, and generate various financial reports. Transactions are stored in a CSV file for persistence.
+
+
+
 ## Features
+
+Add Deposits: Allows users to record deposits to their account.
+
+Make Payments: Allows users to record payments made from their account.
+
+View Ledger: Displays all transactions, categorized by deposits, payments, or full transaction history.
+
+Generate Reports: Provides options to generate:
+
+Month-to-date transactions
+
+Previous month transactions
+
+Year-to-date transactions
+
+Previous year transactions
+
+Search transactions by vendor
+
+Data Persistence: All transactions are stored in a CSV file for easy retrieval and modification.
+
+
 
 ### Usage
 
-#### CSV Format
+When you run the application, you will be presented with a home screen offering various options:
+
+D - Add a deposit
+P - Make a payment
+L - View ledger (transactions)
+X - Exit the application
+
+
+
+#### Example: Adding a Deposit
+
+Select D from the home screen.
+
+Enter the amount, payee, and description for the deposit.
+
+The transaction will be saved and added to the ledger.
+
+
+
+##### Example: Viewing Ledger
+
+Select L from the home screen.
+
+Choose from options like A (All Entries), D (Deposits), P (Payments), or R (Reports).
+
+You can also generate reports for specific date ranges or search by vendor.
+
+
+
+
+##### CSV Format
+
+The application reads and writes transactions to a CSV file (transaction.csv). Each transaction is stored in the following format:
+
+Date: The date of the transaction in YYYY-MM-DD format.
+
+Time: The time of the transaction in HH:MM:SS format.
+
+Description: A brief description of the transaction.
+
+Vendor: The payee or vendor associated with the transaction.
+
+Amount: The transaction amount (positive for deposits, negative for payments).
+
+
 
