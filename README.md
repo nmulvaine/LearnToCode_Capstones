@@ -6,25 +6,25 @@ This Accounting Ledger application is designed to manage and track financial tra
 
 ## Features
 
-Add Deposits: Allows users to record deposits to their account.
+* Add Deposits: Allows users to record deposits to their account.
 
-Make Payments: Allows users to record payments made from their account.
+* Make Payments: Allows users to record payments made from their account.
 
-View Ledger: Displays all transactions, categorized by deposits, payments, or full transaction history.
+* View Ledger: Displays all transactions, categorized by deposits, payments, or full transaction history.
 
-Generate Reports: Provides options to generate:
+* Generate Reports: Provides options to generate:
 
-Month-to-date transactions
+* Month-to-date transactions
 
-Previous month transactions
+* Previous month transactions
 
-Year-to-date transactions
+* Year-to-date transactions
 
-Previous year transactions
+* Previous year transactions
 
-Search transactions by vendor
+* Search transactions by vendor
 
-Data Persistence: All transactions are stored in a CSV file for easy retrieval and modification.
+* Data Persistence: All transactions are stored in a CSV file for easy retrieval and modification.
 
 
 
@@ -32,45 +32,45 @@ Data Persistence: All transactions are stored in a CSV file for easy retrieval a
 
 When you run the application, you will be presented with a home screen offering various options:
 
-D - Add a deposit
-P - Make a payment
-L - View ledger (transactions)
-X - Exit the application
+* D - Add a deposit
+* P - Make a payment
+* L - View ledger (transactions)
+* X - Exit the application
 
 
 
 #### Example: Adding a Deposit
 
-Select D from the home screen.
+* Select D from the home screen.
 
-Enter the amount, payee, and description for the deposit.
+* Enter the amount, payee, and description for the deposit.
 
-The transaction will be saved and added to the ledger.
+* The transaction will be saved and added to the ledger.
 
 
 
 ##### Example: Viewing Ledger
 
-Select L from the home screen.
+* Select L from the home screen.
 
-Choose from options like A (All Entries), D (Deposits), P (Payments), or R (Reports).
+* Choose from options like A (All Entries), D (Deposits), P (Payments), or R (Reports).
 
-You can also generate reports for specific date ranges or search by vendor.
+* You can also generate reports for specific date ranges or search by vendor.
 
 
 
 
 ##### CSV Format
 
-The application reads and writes transactions to a CSV file (transaction.csv). Each transaction is stored in the following format:
+* The application reads and writes transactions to a CSV file (transaction.csv). Each transaction is stored in the following format:
 
-Date: The date of the transaction in YYYY-MM-DD format.
+* Date: The date of the transaction in YYYY-MM-DD format.
 
-Time: The time of the transaction in HH:MM:SS format.
+* Time: The time of the transaction in HH:MM:SS format.
 
-Description: A brief description of the transaction.
+* Description: A brief description of the transaction.
 
-Vendor: The payee or vendor associated with the transaction.
+* Vendor: The payee or vendor associated with the transaction.
 
 Amount: The transaction amount (positive for deposits, negative for payments).
 
