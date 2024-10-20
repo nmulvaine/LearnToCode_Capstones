@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class Main {
     //initializing of an array list of transaction objects
     static ArrayList<Transaction> ledger;
+    //csv path
     static final String csvFileName = "./src/main/resources/transaction.csv";
 
     public static void main(String[] args) throws IOException {
@@ -32,7 +33,7 @@ public class Main {
 
         // create a while loop that continuously runs through the prompts until user exits
         while (input) {
-            System.out.println("\n==========Home Screen========== ");
+            System.out.println("\n======= Home Screen ======= ");
             System.out.println();
             System.out.println("""
                     (D) add deposit
@@ -55,7 +56,8 @@ public class Main {
                     makePayment();
                     break;
                 case "L":
-                    System.out.println("======= Ledger l=======");
+                    System.out.println("\n======= Ledger =======");
+                    System.out.println();
                     //method for ledger
                     Ledger();
                     break;
@@ -70,7 +72,8 @@ public class Main {
         }
     }
 
-    private static void loadTransactions() throws Exception { // this is wrong we should be handling the exception aka a try/catch
+    // Reads from transaction csv and stores it inside ledger
+    private static void loadTransactions() throws IOException {
         //File reader is reading the transaction.csv file
         FileReader fileReader = new FileReader(csvFileName);
 
@@ -84,17 +87,17 @@ public class Main {
         // reads and goes through the transaction csv until there is nothing left
         while ((fileInput = bufferedReader.readLine()) != null) {
 
+            // Split the line using the pipe
             String[] split = fileInput.split("\\|");
 
             System.out.println(split.length);
 
 
-            //  Transaction transaction = new Transaction(LocalDate.parse(split2[0]), LocalTime.parse(split2[1]), split2[2], split2[3], Double.parseDouble(split2[4]));
+            // Create a new Transaction object by parsing the relevant values from the 'split' array
             Transaction transaction = new Transaction(LocalDate.parse(split[0]), LocalTime.parse(split[1]), split[2], split[3], Double.parseDouble(split[4]));
             ledger.add(transaction);
         }
     }
-
     private static void makeDeposit() {
         // Get amount
         System.out.println(" How much would you like to deposit?");
@@ -113,23 +116,14 @@ public class Main {
         //Get date and time
         LocalDateTime dateTime = LocalDateTime.now();
 
-        // hee we don't need to create a new transaction
-        //instead we need to take the inout from the user and
-        //write it to the csv file
         Transaction deposit = new Transaction(dateTime.toLocalDate(), dateTime.toLocalTime(), desc, payee, amount);
 
-
-        //  System.out.println(" How much would you like to deposit?");
 
         System.out.println("Awesome your deposit was " + deposit + ".");
 
 
-        // depoScanner.nextLine();
-
         saveTransactionToFile(deposit);
     }
-//======================================================================================================================
-
     private static void makePayment() {
         System.out.println("How much would you like to pay? ");
 
@@ -157,7 +151,6 @@ public class Main {
 
 
     }
-
     private static void Ledger() {
         System.out.println("Choose an entry to display ");
 
@@ -195,7 +188,8 @@ public class Main {
                     showPayments();
                     break;
                 case "R":
-                    System.out.println("======= Reports =======");
+                    System.out.println("\n======= Reports =======");
+                    System.out.println();
                     reports();
                     break;
                 case "H":
@@ -207,8 +201,6 @@ public class Main {
             }
         }
     }
-    //ledger Logic
-
     //viewAll
     public static void viewAllTransactions() {
 
@@ -216,20 +208,15 @@ public class Main {
         for (Transaction transaction : ledger) {
             System.out.println(transaction);
         }
-        // keep in  mind that this array list only includes the transactions that are in the file
-        //when the app is initally started
-        //any new transaction that were added won't show unless
-        // you read from the file again to get an updated
-
     }
 
-    //helper method to help us write t the csv file
+    //helper method to help us write t0 the csv file
     //aka to save a transaction
     static void saveTransactionToFile(Transaction transaction) {
         StringBuilder sb = new StringBuilder();
 
         try (FileWriter fw = new FileWriter(csvFileName, true)) {
-
+            // Creating a string for the transaction details to save in the CSV file
             sb.append(transaction.getDate().toString());
             sb.append("|");
             sb.append(transaction.getTime().toString());
@@ -251,7 +238,6 @@ public class Main {
             System.out.println("Error");
         }
     }
-
     public static void showDeposits() {
         for (Transaction transaction : ledger) {
             if (transaction.getAmount() > 0) {
@@ -259,7 +245,6 @@ public class Main {
             }
         }
     }
-
     public static void showPayments() {
         for (Transaction transaction : ledger) {
             if (transaction.getAmount() < 0) {
@@ -267,7 +252,6 @@ public class Main {
             }
         }
     }
-
     private static void reports() {
         System.out.println("Choose a report to display");
 
@@ -323,7 +307,6 @@ public class Main {
             }
         }
     }
-
     public static void monthToDate() {
         LocalDate today = LocalDate.now();
         LocalDate firstDayofmonth = today.withDayOfMonth(1);
@@ -335,7 +318,6 @@ public class Main {
             }
         }
     }
-
     public static void prevMonth() {
         LocalDate today = LocalDate.now();
         YearMonth previousMonth = YearMonth.from(today).minusMonths(1);
@@ -350,7 +332,6 @@ public class Main {
             System.out.println(transaction);
         }
     }
-
     public static void yearToDate() {
         LocalDate today = LocalDate.now();
 
@@ -377,8 +358,11 @@ public class Main {
         String formattedEndOfYear = endOfPrevOfYear.format(formatter);
 
         System.out.println(" previous year " + formattedStartOfPrevYear + " to " + formattedEndOfYear);
+        for (Transaction transaction : ledger) {
+            if (transaction.getDate().getYear() - 1 == prevYear) ;
+            System.out.println(transaction);
+        }
     }
-
     public static void vendorSearch() {
         Scanner searchVendorScanner = new Scanner(System.in);
 
@@ -394,6 +378,7 @@ public class Main {
                 vendorFound = true;
             }
         }
+
         if (!vendorFound) {
             System.out.println(" No vendor found " + search);
         }
